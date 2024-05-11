@@ -1,0 +1,103 @@
+@charset "utf-8";
+/* Page */
+.page-profiler {
+  max-width: 100%;
+}
+/* Offset for page ids */
+.page-profiler [id]::before {
+  content: '';
+  display: block;
+  height: 1rem;
+  margin-top: -1rem;
+  visibility: hidden;
+}
+/* Profiler */
+#profiler {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 40;
+  pointer-events: none;
+}
+#profiler-content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  -ms-overflow-y: visible;
+  pointer-events: auto;
+  width: 100%;
+}
+#profiler-head,
+#profiler-foot {
+  align-items: center;
+  background-color: whitesmoke;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  padding: 0.5rem;
+  position: relative;
+}
+#profiler-body {
+  -webkit-overflow-scrolling: touch;
+  background-color: white;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  padding: 0.5rem;
+  position: relative;
+}
+#profiler-body, #profiler-foot {display: none;}
+.profiler-nav {float: left; width: 300px; position: sticky; top: 10px;}
+.profiler-main {margin-left: 350px;}
+/* Offset for ids */
+.profiler-main [id]::before {
+  content: '';
+  display: block;
+  height: 1rem;
+  margin-top: -1rem;
+  visibility: hidden;
+}
+/* Open Logic */
+body:has(.profiler-open) {overflow: hidden !important;}
+#profiler:has(.profiler-open) {top: 0;}
+.profiler-open {max-height: 100%; min-height: 100%; max-width: 100%; min-width: 100%;}
+.profiler-open #profiler-body, .profiler-open #profiler-foot {display: block;}
+
+/* Head Collectors */
+.profiler-head-collectors {
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: 100%;
+  margin-right: 1rem;
+}
+ul.profiler-ul-collectors {
+  list-style: none;
+  display: flex;
+  position: relative;
+  white-space: nowrap;
+  width: max-content;
+}
+ul.profiler-ul-collectors li:not(:last-child) {
+  padding-right: 1rem;
+}
+.profiler-ul-collectors .badge {
+  color: var(--color-highlight);
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
+
+/* Dump */
+.profiler-dump .closed {display: none;}
+
+/* Content */
+.profiler-collector .content table td pre {margin-bottom: 0;}
+.profiler-collector .content table td pre:not(:first-child) {margin-top: 0.5rem;}
