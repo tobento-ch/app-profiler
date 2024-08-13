@@ -19,6 +19,7 @@ use Tobento\App\Profiler\Middleware\MiddlewareFactory;
 use Tobento\App\Profiler\View;
 use Tobento\Service\Middleware\MiddlewareDispatcherInterface;
 use Tobento\Service\Middleware\MiddlewareDispatcher;
+use Tobento\Service\Middleware\MiddlewareFactoryInterface;
 use Tobento\Service\Middleware\FallbackHandler;
 use Tobento\Service\View\ViewInterface;
 use Psr\Container\ContainerInterface;
@@ -68,6 +69,7 @@ class Middleware implements CollectorInterface
         $middlewareFactory = new MiddlewareFactory(
             container: $this->app->get(ContainerInterface::class),
             collector: $this,
+            replaces: $this->app->get(MiddlewareFactoryInterface::class)->getReplaceMiddlewares(),
         );
         
         return new class($fallbackHandler, $middlewareFactory) extends MiddlewareDispatcher
@@ -130,6 +132,13 @@ class Middleware implements CollectorInterface
             $data['aliases'] = $aliases;
         }
         
+        if (
+            $this->app->has(MiddlewareDispatcherInterface::class)
+            && !empty($groups = $this->app->get(MiddlewareDispatcherInterface::class)->getGroups())
+        ) {
+            $data['groups'] = $groups;
+        }
+        
         return $data;
     }
     
@@ -142,6 +151,18 @@ class Middleware implements CollectorInterface
      */
     public function render(ViewInterface $view, array $data): string
     {
+        $groups = [];
+        
+        foreach($data['groups'] ?? [] as $name => $group) {
+            $groups[] = ['name' => $name, 'middlewares' => $group];
+        }
+        
+        $aliases = [];
+        
+        foreach($data['aliases'] ?? [] as $alias => $md) {
+            $aliases[] = ['alias' => $alias, 'middleware' => $md];
+        }
+        
         return
             $view->render('profiler/table', [
                 'table' => new View\Table(
@@ -152,7 +173,13 @@ class Middleware implements CollectorInterface
             ]).
             $view->render('profiler/table', [
                 'table' => new View\Table(
-                    rows: $data['aliases'] ?? [],
+                    rows: $groups,
+                    title: 'Middleware Groups',
+                ),
+            ]).            
+            $view->render('profiler/table', [
+                'table' => new View\Table(
+                    rows: $aliases,
                     title: 'Middleware Aliases',
                 ),
             ]);
