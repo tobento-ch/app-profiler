@@ -168,7 +168,7 @@ class Table
      * @param bool $double_encode
      * @return string
      */
-    public static function esc(
+    public function esc(
         string $string,
         int $flags = ENT_QUOTES,
         string $encoding = 'UTF-8',
