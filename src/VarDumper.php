@@ -30,6 +30,7 @@ class VarDumper
     public static function dump(mixed $var): string
     {
         $cloner = new Cloner\VarCloner();
+        $cloner->setMaxItems(500);
         $dumper = new Dumper\HtmlDumper();
         $output = fopen('php://memory', 'r+b');
         $dumper->setOutput($output);
