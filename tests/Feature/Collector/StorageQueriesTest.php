@@ -263,6 +263,10 @@ class StorageQueriesTest extends \Tobento\App\Testing\TestCase
         $app->booting();
         $storage = $app->get(StorageInterface::class);
         $storage->tables()->add('products', ['id', 'sku'], 'id');
+        $inserted = $storage->table('products')->insertItems([
+            ['sku' => 'glue'],
+            ['sku' => 'pencil'],
+        ]);        
         $items = $storage->table('products')->updateOrInsert(['id' => 2], ['sku' => 'glue']);
         
         $http->response()
