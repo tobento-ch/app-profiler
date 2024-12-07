@@ -167,6 +167,11 @@ class Logs implements CollectorInterface
             {
                 return $this->loggers->addAlias($alias, $logger);
             }
+            
+            public function aliases(): array
+            {
+                return $this->loggers->aliases();
+            }
 
             public function logger(null|string $name = null): LoggerInterface
             {
