@@ -162,6 +162,6 @@ class Profiler implements ProfilerInterface
      */
     public function nameToId(string $name): string
     {
-        return preg_replace('/[^A-Za-z0-9_\-\']/', '-', trim(strtolower($name)));
+        return (string)preg_replace('/[^A-Za-z0-9_\-\']/', '-', trim(strtolower($name)));
     }
 }
