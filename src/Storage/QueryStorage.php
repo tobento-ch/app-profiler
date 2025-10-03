@@ -29,9 +29,6 @@ use Tobento\Service\Storage\Query\SubQuery;
 use Closure;
 use Throwable;
 
-/**
- * QueryStorage
- */
 class QueryStorage implements StorageInterface, StorageAdapterInterface
 {
     /**
@@ -70,6 +67,7 @@ class QueryStorage implements StorageInterface, StorageAdapterInterface
      *
      * @param Closure $callback
      * @return mixed
+     * @psalm-suppress InvalidOperand
      */
     protected function record(Closure $callback, string $statement = ''): mixed
     {
@@ -183,6 +181,18 @@ class QueryStorage implements StorageInterface, StorageAdapterInterface
     public function select(string ...$columns): static
     {
         $this->storage->select(...$columns);
+        return $this;
+    }
+    
+    /**
+     * Sets a RAW select expression.
+     *
+     * @param string $expression
+     * @return static $this
+     */
+    public function selectRaw(string $expression): static
+    {
+        $this->storage->selectRaw($expression);
         return $this;
     }
 
@@ -462,7 +472,7 @@ class QueryStorage implements StorageInterface, StorageAdapterInterface
      * Where IN clause
      *
      * @param string|Closure $column The column name. 
-     * @param array $value The values
+     * @param mixed $value The values
      * @return static $this
      */
     public function whereIn(string|Closure $column, mixed $value = null): static
@@ -665,8 +675,6 @@ class QueryStorage implements StorageInterface, StorageAdapterInterface
      * Where Json contains key or clause
      *
      * @param string $column The column name.
-     * @param string $boolean
-     * @param bool $not
      * @return static $this
      */
     public function orWhereJsonContainsKey(
@@ -1016,6 +1024,16 @@ class QueryStorage implements StorageInterface, StorageAdapterInterface
     public function supportsReturningItems(string $method): bool
     {
         return $this->storage->supportsReturningItems($method);
+    }
+    
+    /**
+     * Returns true if the storage supports raw statements, otherwise false.
+     *
+     * @return bool
+     */
+    public function supportsRawStatements(): bool
+    {
+        return $this->storage->supportsRawStatements();
     }
     
     /**
