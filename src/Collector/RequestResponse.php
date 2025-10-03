@@ -46,6 +46,7 @@ class RequestResponse implements CollectorInterface
      * Create a new RequestResponse.
      *
      * @param AppInterface $app
+     * @psalm-suppress InvalidOperand
      */
     public function __construct(
         AppInterface $app,
