@@ -17,7 +17,6 @@ use Tobento\App\Profiler\ProfilerInterface;
 use Tobento\App\Profiler\ProfileRepositoryInterface;
 use Tobento\Service\Responser\ResponserInterface;
 use Tobento\Service\Routing\RouterInterface;
-use Tobento\Service\Menu\Menu;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -29,14 +28,12 @@ class ProfilesController
      * Display the profiles.
      *
      * @param ResponserInterface $responser
-     * @param RouterInterface $router
      * @param ProfilerInterface $profiler
      * @param ProfileRepositoryInterface $profileRepository
      * @return ResponseInterface
      */
     public function index(
         ResponserInterface $responser,
-        RouterInterface $router,
         ProfilerInterface $profiler,
         ProfileRepositoryInterface $profileRepository,
     ): ResponseInterface {
@@ -57,14 +54,12 @@ class ProfilesController
      *
      * @param string $id
      * @param ResponserInterface $responser
-     * @param RouterInterface $router
      * @param ProfilerInterface $profiler
      * @return ResponseInterface
      */
     public function show(
         string $id,
         ResponserInterface $responser,
-        RouterInterface $router,
         ProfilerInterface $profiler,
     ): ResponseInterface {
         

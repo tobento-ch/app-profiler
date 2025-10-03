@@ -17,8 +17,6 @@ use Tobento\App\Profiler\ProfilerInterface;
 use Tobento\App\Profiler\ProfileRepositoryInterface;
 use Tobento\Service\Requester\RequesterInterface;
 use Tobento\Service\Responser\ResponserInterface;
-use Tobento\Service\Routing\RouterInterface;
-use Tobento\Service\Menu\Menu;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -31,7 +29,6 @@ class ToolbarController
      *
      * @param RequesterInterface $requester
      * @param ResponserInterface $responser
-     * @param RouterInterface $router
      * @param ProfilerInterface $profiler
      * @param ProfileRepositoryInterface $profileRepository
      * @return ResponseInterface
@@ -39,7 +36,6 @@ class ToolbarController
     public function profile(
         RequesterInterface $requester,
         ResponserInterface $responser,
-        RouterInterface $router,
         ProfilerInterface $profiler,
         ProfileRepositoryInterface $profileRepository,
     ): ResponseInterface {
@@ -55,12 +51,6 @@ class ToolbarController
         if (!$profile) {
             return $responser->json(data: [], code: 404);
         }
-        
-        /*$profiles = [];
-        
-        foreach($profileRepository->findAll(limit: $count+1) as $p) {
-            $profiles[$p->id()] = $p->name();
-        }*/
         
         $profileResponse = $responser->render(
             view: 'profiler/toolbar/toolbar',
