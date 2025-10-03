@@ -38,7 +38,7 @@ class MiddlewareFactory extends AutowiringMiddlewareFactory
      * @param array $replaces
      */
     public function __construct(
-        protected ContainerInterface $container,
+        ContainerInterface $container,
         protected MiddlewareCollector $collector,
         array $replaces = [],
     ) {
