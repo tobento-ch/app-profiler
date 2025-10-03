@@ -37,7 +37,7 @@
 #profiler-head,
 #profiler-foot {
   align-items: center;
-  background-color: whitesmoke;
+  background-color: var(--color-gray-100);
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
@@ -46,7 +46,7 @@
 }
 #profiler-body {
   -webkit-overflow-scrolling: touch;
-  background-color: white;
+  background-color: var(--color-white);
   flex-grow: 1;
   flex-shrink: 1;
   overflow: auto;
