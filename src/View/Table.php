@@ -134,7 +134,7 @@ class Table
         
         if (is_array($value)) {
             try {
-                $value = json_encode(
+                $value = (string)json_encode(
                     json_decode((new Collection($value))->toJson(), true, 512, JSON_THROW_ON_ERROR),
                     JSON_PRETTY_PRINT
                 );
