@@ -39,6 +39,6 @@ class VarDumper
         $dumper->dump($cloner->cloneVar($var));
         $result = stream_get_contents($output, -1, 0);
         fclose($output);
-        return $result;
+        return (string)$result;
     }
 }
